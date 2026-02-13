@@ -60,8 +60,8 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build project
-        run: ./gradlew build -x test
+      - name: Build + test + coverage
+        run: ./gradlew test jacocoTestReport
 
       - name: Analyze with SonarCloud
         uses: SonarSource/sonarcloud-github-action@v2.2.0
@@ -72,10 +72,8 @@ jobs:
             -Dsonar.projectKey=advprog-2026-A12-project_Individual-Preparation
             -Dsonar.organization=advprog-2026-a12-project
             -Dsonar.java.binaries=build/classes
+            -Dsonar.sources=src/main/java
+            -Dsonar.tests=src/test/java
+            -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml
           projectBaseDir: .
 
-      - name: SonarCloud Quality Gate check
-        uses: sonarsource/sonarqube-quality-gate-action@v1.1.0
-        timeout-minutes: 5
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

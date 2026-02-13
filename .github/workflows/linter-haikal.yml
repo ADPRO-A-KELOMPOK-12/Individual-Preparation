@@ -1,10 +1,10 @@
-name: Linter
+name: Linter-haikal
 
 on:
   push:
-    branches: [ "main", "dev" ]
+    branches: [ "ci-cd/haikal" ]
   pull_request:
-    branches: [ "main", "dev" ]
+    branches: [ "ci-cd/haikal "]
 
 permissions: { }
 
