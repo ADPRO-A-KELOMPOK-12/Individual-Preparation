@@ -2,7 +2,9 @@ name: API Functional Test
 
 on:
   push:
-    branches: [ "feat/arithmetic-subtract" ]
+    branches: [ "main", "dev" ]
+  pull_request:
+    branches: [ "main", "dev" ]
 
 jobs:
   api-test:
