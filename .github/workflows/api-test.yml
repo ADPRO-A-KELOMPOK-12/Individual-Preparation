@@ -1,0 +1,34 @@
+name: API Functional Test
+
+on:
+  push:
+    branches: [ "feat/arithmetic-subtract" ]
+
+jobs:
+  api-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Build project
+        run: ./gradlew build
+
+      - name: Start application
+        run: |
+          nohup ./gradlew bootRun &
+
+      - name: Wait for server
+        run: sleep 25
+
+      - name: Install Newman
+        run: npm install -g newman
+
+      - name: Run Postman collection
+        run: newman run postman/arithmetic-tests.json
